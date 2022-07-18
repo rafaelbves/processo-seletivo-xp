@@ -1,0 +1,34 @@
+
+version: '3'
+
+services:
+  node:
+    image: node:16
+    container_name: xpsel
+    tty: true
+    stdin_open: true
+    command: bash
+    restart: always
+    working_dir: /app
+    volumes:
+      - ./:/app
+    depends_on:
+      - mysql-db
+
+    ports:
+      - 3000:3000
+    environment:
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+      MYSQL_HOST: mysql-db
+
+  mysql-db:
+    container_name: xpsel_db
+    image: mysql:8.0.17
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: helloworld
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
+    ports:
+      - "3308:3306" 
