@@ -15,6 +15,7 @@ CREATE TABLE ativos (
     id INT NOT NULL auto_increment,
     nome VARCHAR(30) NOT NULL,
     valor DECIMAL(5,2) NOT NULL,
+    quantidade INTEGER NOT NULL,
     data DATETIME DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(id)
 ) ENGINE=INNODB;
@@ -32,14 +33,14 @@ CREATE TABLE contas (
 CREATE TABLE compras_vendas (
     id INT NOT NULL auto_increment,
     id_user INT NOT NULL,
-    id_ativos INT NOT NULL,
-    quantity INT NOT NULL,
-    date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    id_ativo INT NOT NULL,
+    quantidade INT NOT NULL,
+    data DATETIME DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY(id),
     FOREIGN KEY (id_user)
         REFERENCES users (id)
         ON DELETE CASCADE,
-    FOREIGN KEY (id_ativos)
+    FOREIGN KEY (id_ativo)
         REFERENCES ativos (id)
         ON DELETE CASCADE
 )  ENGINE=INNODB;
@@ -53,12 +54,12 @@ INSERT INTO XPSel.users (nome, senha) VALUES
     ("Lorenzo Kaique Cavalcanti", "166544"),
     ("Heloisa Ayla Luciana Vieira", "153547");
 
-INSERT INTO XPSel.ativos (nome, valor, data) VALUES
-    ("PETR4", 28.37, NOW()),
-    ("XP", 18.22, NOW()),
-    ("VALE", 13.04, NOW()),
-    ("BBAS3", 33.60, NOW()),
-    ("ELET6", 45.66, NOW());
+INSERT INTO XPSel.ativos (nome, valor, quantidade, data) VALUES
+    ("PETR4", 28.37, 1000, NOW()),
+    ("XP", 18.22, 1000, NOW()),
+    ("VALE", 13.04, 1000, NOW()),
+    ("BBAS3", 33.60, 1000, NOW()),
+    ("ELET6", 45.66, 1000, NOW());
 
 INSERT INTO XPSel.contas (id_user, transacao, data) VALUES
     (1, 10000.00, NOW()),
