@@ -21,11 +21,12 @@ CREATE TABLE ativos (
 ) ENGINE=INNODB;
 
 CREATE TABLE contas (
-    id INT NOT NULL auto_increment,
+	id INT NOT NULL auto_increment,
     id_user INT NOT NULL,
     transacao DECIMAL(8,2),
+    tipo VARCHAR(30) NOT NULL,
     data DATETIME DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY(id),
+	PRIMARY KEY(id),
     FOREIGN KEY (id_user)
         REFERENCES users (id)
         ON DELETE CASCADE
@@ -62,9 +63,10 @@ INSERT INTO XPSel.ativos (nome, valor, quantidade, data) VALUES
     ("BBAS3", 33.60, 1000, NOW()),
     ("ELET6", 45.66, 1000, NOW());
 
-INSERT INTO XPSel.contas (id_user, transacao, data) VALUES
-    (1, 10000.00, NOW()),
-    (2, 18250.00, NOW()),
-    (3, 1500.00, NOW()),
-    (4, 7000.00, NOW()),
-    (5, 4000.00, NOW());
+INSERT INTO XPSel.contas (id_user, transacao, tipo, data) VALUES
+	(1, -1000.00, 'saque', NOW()),
+    (1, 10000.00, 'deposito',NOW()),
+    (2, 18250.00, 'deposito',NOW()),
+    (3, 1500.00, 'deposito', NOW()),
+    (4, 7000.00, 'deposito',NOW()),
+    (5, 4000.00, 'deposito',NOW());
