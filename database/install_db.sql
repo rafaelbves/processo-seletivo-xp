@@ -21,10 +21,11 @@ CREATE TABLE ativos (
 ) ENGINE=INNODB;
 
 CREATE TABLE contas (
+    id INT NOT NULL auto_increment,
     id_user INT NOT NULL,
     transacao DECIMAL(8,2),
     data DATETIME DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY(id_user),
+    PRIMARY KEY(id),
     FOREIGN KEY (id_user)
         REFERENCES users (id)
         ON DELETE CASCADE
