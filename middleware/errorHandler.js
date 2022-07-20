@@ -1,5 +1,3 @@
-require('express-async-errors');
-
 class HttpError extends Error {
     constructor(status, message) {
         super(message);
@@ -10,9 +8,12 @@ class HttpError extends Error {
 const errorHandler = (err, req, res, next) => {
     const { status, message } = err;
     if (!status) return res.status(500).json(message);
-    return res.status(status).json({ message })
+    return res.status(status).json({ message });
 }
 
-module.exports = errorHandler;
+module.exports = {
+    errorHandler,
+    HttpError,
+};
 
 
