@@ -1,13 +1,13 @@
 const connection = require('./connection');
 
-const buyRequest = async(buyOrder) => {
-  const { CodCliente, CodAtivo, QtdeAtivo } = buyOrder;
+const buyOrSellRequest = async(buyOrder) => {
+  const { codCliente, codAtivo, qtdeAtivo } = buyOrder;
   const [query] = await connection.execute(
     `
     INSERT INTO
       XPSel.compras_vendas (id_user, id_ativo, quantidade, data)
     VALUES
-      (${CodCliente}, ${CodAtivo}, ${QtdeAtivo}, NOW())
+      (${codCliente}, ${codAtivo}, ${qtdeAtivo}, NOW());
     `,
   );
 
@@ -15,13 +15,13 @@ const buyRequest = async(buyOrder) => {
 }
 
 const countBalanceMovement = async (newTransaction) => {
-  const { CodCliente, Valor, transactionType } = newTransaction;
+  const { codCliente, valor, transactionType } = newTransaction;
   const [query] = await connection.execute(
     `
     INSERT INTO
       XPSel.contas (id_user, transacao, tipo, data)
     VALUES
-	    (${CodCliente}, ${Valor}, '${transactionType}', NOW()),
+	    (${codCliente}, ${valor}, '${transactionType}', NOW());
     `
   );
   
@@ -32,9 +32,9 @@ const getAssetsAvailable = async () => {
   const [query] = await connection.execute(
     `
     SELECT 
-	    a.id AS CodAtivo,
-      a.quantidade - IFNULL(SUM(cv.quantidade), 0) AS QtdeAtivo,
-      a.valor AS Valor
+	    a.id AS codAtivo,
+      a.quantidade - IFNULL(SUM(cv.quantidade), 0) AS qtdeAtivo,
+      a.valor AS valor
     FROM 
 	    XPSel.compras_vendas AS cv
     RIGHT JOIN 
@@ -53,10 +53,10 @@ const getClientsAssets = async () => {
   const [query] = await connection.execute(
     `
     SELECT 
-    cv.id_user AS CodCliente,
-      a.id AS CodAtivo,
-    IFNULL(SUM(cv.quantidade), 0) AS QtdeAtivo,
-      a.valor AS Valor
+    cv.id_user AS codCliente,
+      a.id AS codAtivo,
+    IFNULL(SUM(cv.quantidade), 0) AS qtdeAtivo,
+      a.valor AS valor
     FROM 
       XPSel.compras_vendas AS cv
     INNER JOIN 
@@ -76,8 +76,8 @@ const getClientsBalance = async () => {
   const [query] = await connection.execute(
     `
     SELECT 
-    id_user AS CodCliente,
-      sum(transacao) AS Saldo
+    id_user AS codCliente,
+      sum(transacao) AS saldo
     FROM
       XPSel.contas
     GROUP BY
@@ -88,10 +88,24 @@ const getClientsBalance = async () => {
   return query;
 };
 
+const undoAction = async (table, id) => {
+  const [query] = await connection.execute(
+    `
+    DELETE FROM
+      XPSel.${table}
+    WHERE
+      id = ${id};
+    `
+  )
+  
+  return query;
+}
+
 module.exports = {
-  buyRequest,
+  buyOrSellRequest,
   countBalanceMovement,
   getAssetsAvailable,
   getClientsAssets,
   getClientsBalance,
+  undoAction,
 }
