@@ -1,9 +1,10 @@
-const { Router } = require('express');
-const investimentosControllers = require('../controllers/investimentosController.js')
+const {Router} = require('express');
+const investiControllers = require('../controllers/investimentosController.js');
 
+// eslint-disable-next-line new-cap
 const router = Router();
 
-router.post('/comprar', investimentosControllers.postBuyOrder);
-router.post('/vender', investimentosControllers.postSellOrder);
+router.post('/comprar', investiControllers.postBuyOrder);
+router.post('/vender', investiControllers.postSellOrder);
 
 module.exports = router;
