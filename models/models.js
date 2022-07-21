@@ -60,7 +60,9 @@ const getClientsAssets = async () => {
       cv.id_ativo = a.id
     GROUP BY
       a.id, 
-      cv.id_user;
+      cv.id_user
+    HAVING
+      qtdeAtivo > 0;
     `,
   );
 
