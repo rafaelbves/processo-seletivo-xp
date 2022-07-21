@@ -23,8 +23,14 @@ const postDeposit = async (body) => {
   requestValidation(body);
   const {codCliente, valor} = body;
 
+  const newTransaction = {
+    codCliente,
+    valor: valor.toFixed(2),
+    transactionType: 'deposito',
+  };
+
   const newDeposit = await model
-      .countBalanceMovement(codCliente, valor, 'deposito');
+      .countBalanceMovement(newTransaction);
   if (!newDeposit.insertId) {
     throw new HttpError(500, 'alguma coisa deu errada');
   };
