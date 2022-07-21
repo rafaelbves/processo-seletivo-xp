@@ -8,5 +8,6 @@ router.get('/', (req, res) => {
 });
 router.post('/deposito', contaController.postDeposit);
 router.post('/saque', contaController.postWithdraw);
+router.get('/:codCliente', contaController.getClientBalance);
 
 module.exports = router;

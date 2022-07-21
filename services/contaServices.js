@@ -76,7 +76,18 @@ const postWithdraw = async (body) => {
   return {status: 201, message: 'saque realisado com sucesso'};
 };
 
+const getClientBalance = async (codCliente) => {
+  const allClients = await model.getClientsBalance();
+  const searchedClient = allClients
+      .find((client) => client.codCliente === parseInt(codCliente));
+  if (!searchedClient) {
+    throw new HttpError(404, 'cliente não encontrado');
+  };
+  return {status: 200, message: searchedClient};
+};
+
 module.exports = {
   postDeposit,
   postWithdraw,
+  getClientBalance,
 };

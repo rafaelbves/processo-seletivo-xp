@@ -20,7 +20,18 @@ const postWithdraw = async (req, res, next) => {
   }
 };
 
+const getClientBalance = async (req, res, next) => {
+  const {codCliente} = req.params;
+  try {
+    const {status, message} = await contaServices.getClientBalance(codCliente);
+    return res.status(status).json({message});
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   postDeposit,
   postWithdraw,
+  getClientBalance,
 };
