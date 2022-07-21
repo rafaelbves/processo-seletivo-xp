@@ -13,12 +13,17 @@ const clientValidation = async (searchedClientAssets, codCliente) => {
   };
 };
 
+const assetValidation = (searcherAsset) => {
+  if (!searcherAsset) {
+    throw new HttpError(404, 'ativo não encontrado');
+  }
+};
+
 const getAssetsByClient = async (codCliente) => {
   const allClientsAssets = await model.getClientsAssets();
   const searchedClientAssets = allClientsAssets
       .filter((clientAsset) => {
-        return parseInt(clientAsset.codCliente) === parseInt(codCliente) &&
-            clientAsset.qtdeAtivo > 0;
+        return parseInt(clientAsset.codCliente) === parseInt(codCliente);
       });
 
   await clientValidation(searchedClientAssets, parseInt(codCliente));
@@ -26,6 +31,18 @@ const getAssetsByClient = async (codCliente) => {
   return {status: 200, message: searchedClientAssets};
 };
 
+const getAssetsById = async (codAtivo) => {
+  const allAssetsAvailable = await model.getAssetsAvailable();
+
+  const searcherAsset = allAssetsAvailable
+      .find((asset) => asset.codAtivo === parseInt(codAtivo));
+
+  assetValidation(searcherAsset);
+
+  return {status: 200, message: searcherAsset};
+};
+
 module.exports = {
   getAssetsByClient,
+  getAssetsById,
 };
