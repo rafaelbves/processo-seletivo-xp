@@ -5,6 +5,6 @@ const router = Router();
 const ativosController = require('../controllers/ativosController');
 
 router.get('/cliente/:codCliente', ativosController.getAssetsByClient);
-// router.get('/:codAtivos' );
+router.get('/:codAtivo', ativosController.getAssetsById );
 
 module.exports = router;

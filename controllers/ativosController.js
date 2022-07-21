@@ -10,6 +10,17 @@ const getAssetsByClient = async (req, res, next) => {
   }
 };
 
+const getAssetsById = async (req, res, next) => {
+  const {codAtivo} = req.params;
+  try {
+    const {status, message} = await ativosService.getAssetsById(codAtivo);
+    return res.status(status).json({message});
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   getAssetsByClient,
+  getAssetsById,
 };

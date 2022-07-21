@@ -34,6 +34,7 @@ const getAssetsByClient = async (codCliente) => {
 const getAssetsById = async (codAtivo) => {
   const allAssetsAvailable = await model.getAssetsAvailable();
 
+  console.log(allAssetsAvailable);
   const searcherAsset = allAssetsAvailable
       .find((asset) => asset.codAtivo === parseInt(codAtivo));
 
