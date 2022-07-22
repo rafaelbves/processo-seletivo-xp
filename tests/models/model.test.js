@@ -11,13 +11,13 @@ const modelInsertPayload = {
 };
 
 describe('Testa a conexão das funções da camada model com o DB', async () => {
-  before(async () => {
+  before(() => {
     const execute = [true];
 
     sinon.stub(connection, 'execute').resolves(execute);
   });
 
-  after(async ()=> {
+  after(()=> {
     connection.execute.restore();
   });
   it('testando a função buyOrSellRequest', async () => {
