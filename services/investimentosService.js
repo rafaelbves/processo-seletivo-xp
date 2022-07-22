@@ -24,7 +24,7 @@ const validationRequest = (body) => {
 
 const validationBuyOrder = (qtdeAtivo, buyer, requestedAsset) => {
   if (!buyer) {
-    throw new HttpError(403, 'cliente inválido');
+    throw new HttpError(404, 'cliente nao encontrado');
   };
 
   if (!requestedAsset) {
@@ -44,7 +44,7 @@ const validationBuyOrder = (qtdeAtivo, buyer, requestedAsset) => {
 
 const validationSellOrder = (qtdeAtivo, seller, sellerAsset) => {
   if (!seller) {
-    throw new HttpError(403, 'cliente inválido');
+    throw new HttpError(404, 'cliente nao encontrado');
   };
 
   if (!sellerAsset) {
@@ -77,7 +77,6 @@ const executeBuyOrder = async (qtdeAtivo, buyer, requestedAsset) => {
 };
 
 const executeSellOrder = async (qtdeAtivo, seller, sellerAsset) => {
-  console.log(sellerAsset);
   const {codAtivo, valor} = sellerAsset;
   const {codCliente} = seller;
   const sellValue = (parseFloat(qtdeAtivo) * parseFloat(valor));
