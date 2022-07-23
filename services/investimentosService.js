@@ -64,7 +64,9 @@ const executeBuyOrder = async (qtdeAtivo, buyer, requestedAsset) => {
 
   const buyOrder = await models
       .buyOrSellRequest({codCliente, codAtivo, qtdeAtivo});
-  if (!buyOrder.insertId) throw new HttpError(500, 'alguma coisa deu errado!');
+  if (!buyOrder.insertId) {
+    throw new HttpError(500, 'alguma coisa deu errado!');
+  };
 
   const updateFunds = await models
       .countBalanceMovement(
@@ -107,7 +109,7 @@ const postBuyOrder = async (body) => {
   const buyer = clients.find((client) => client.codCliente === codCliente);
 
   validationBuyOrder(qtdeAtivo, buyer, requestedAsset);
-  executeBuyOrder(qtdeAtivo, buyer, requestedAsset);
+  await executeBuyOrder(qtdeAtivo, buyer, requestedAsset);
 
 
   return {status: 201, message: 'compra realisada com sucesso'};
@@ -126,7 +128,7 @@ const postSellOrder = async (body) => {
           .codCliente === codCliente && clientAsset.codAtivo === codAtivo);
 
   validationSellOrder(qtdeAtivo, seller, sellerAsset);
-  executeSellOrder(qtdeAtivo, seller, sellerAsset);
+  await executeSellOrder(qtdeAtivo, seller, sellerAsset);
 
 
   return {status: 201, message: 'venda realisada com sucesso'};

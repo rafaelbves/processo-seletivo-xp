@@ -4,7 +4,7 @@ const sinon = require('sinon');
 const ativosService = require('../../services/ativosService');
 const model = require('../../models/models');
 
-const modelClientsAssets = [
+const mockClientsAssets = [
   {
     'codCliente': 1,
     'codAtivo': 2,
@@ -19,7 +19,7 @@ const modelClientsAssets = [
   },
 ];
 
-const modelClientsBalance = [
+const mockClientsBalance = [
   {
     'codCliente': 1,
     'saldo': '9000.00',
@@ -34,7 +34,7 @@ const modelClientsBalance = [
   },
 ];
 
-const modelGetAssetsAvailable = [
+const mockGetAssetsAvailable = [
   {
     'codAtivo': 2,
     'qtdeAtivo': '900',
@@ -44,8 +44,8 @@ const modelGetAssetsAvailable = [
 
 describe('Retorna a lista de ativos que o cliente possui', async () => {
   before(() => {
-    sinon.stub(model, 'getClientsAssets').resolves(modelClientsAssets);
-    sinon.stub(model, 'getClientsBalance').resolves(modelClientsBalance);
+    sinon.stub(model, 'getClientsAssets').resolves(mockClientsAssets);
+    sinon.stub(model, 'getClientsBalance').resolves(mockClientsBalance);
   });
 
   after(() => {
@@ -87,7 +87,7 @@ describe('Retorna a lista de ativos que o cliente possui', async () => {
 
 describe('localiza o ativo pelo id', async () => {
   before(() => {
-    sinon.stub(model, 'getAssetsAvailable').resolves(modelGetAssetsAvailable);
+    sinon.stub(model, 'getAssetsAvailable').resolves(mockGetAssetsAvailable);
   });
   after(() => {
     model.getAssetsAvailable.restore();
