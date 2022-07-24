@@ -21,8 +21,9 @@ const requestValidation = (body) => {
 };
 
 const balanceCheck = (client, saque) => {
-  const {saldo} = client;
+  if (!client) throw new HttpError(404, 'cliente não encontrado');
 
+  const {saldo} = client;
   if (saldo <= saque) {
     throw new HttpError(
         400,
@@ -31,8 +32,7 @@ const balanceCheck = (client, saque) => {
   };
 };
 
-const postDeposit = async (body) => {
-  requestValidation(body);
+const executeDeposit = async (body) => {
   const {codCliente, valor} = body;
 
   const newTransaction = {
@@ -41,13 +41,44 @@ const postDeposit = async (body) => {
     transactionType: 'deposito',
   };
 
+  const allClientsBalance = await model.getClientsBalance();
+
+  const searchedClient = allClientsBalance
+      .find((client) => client.codCliente === codCliente);
+
+  if (!searchedClient) throw new HttpError(404, 'cliente não encontrado');
+
   const newDeposit = await model
       .countBalanceMovement(newTransaction);
+
   if (!newDeposit.insertId) {
-    throw new HttpError(500, 'alguma coisa deu errada');
+    throw new HttpError(500, 'alguma coisa deu errado');
+  };
+};
+
+const executeWithdraw = async (body) => {
+  const {codCliente, valor} = body;
+
+  const newTransaction = {
+    codCliente,
+    valor: (valor * -1).toFixed(2),
+    transactionType: 'saque',
   };
 
-  return {status: 201, message: 'deposito realisado'};
+  const newWithdraw = await model
+      .countBalanceMovement(newTransaction);
+
+  if (!newWithdraw.insertId) {
+    throw new HttpError(500, 'alguma coisa deu errado');
+  };
+};
+
+const postDeposit = async (body) => {
+  requestValidation(body);
+
+  await executeDeposit(body);
+
+  return {status: 201, message: 'deposito realisado com sucesso'};
 };
 
 const postWithdraw = async (body) => {
@@ -60,18 +91,7 @@ const postWithdraw = async (body) => {
 
   balanceCheck(searchedClient, valor);
 
-  const newTransaction = {
-    codCliente,
-    valor: (valor * -1).toFixed(2),
-    transactionType: 'saque',
-  };
-
-  const newWithdraw = await model
-      .countBalanceMovement(newTransaction);
-
-  if (!newWithdraw.insertId) {
-    throw new HttpError(500, 'alguma coisa deu errada');
-  };
+  await executeWithdraw(body);
 
   return {status: 201, message: 'saque realisado com sucesso'};
 };
