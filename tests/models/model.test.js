@@ -10,7 +10,8 @@ const modelInsertPayload = {
   qtdeAtivo: 100,
 };
 
-describe('Testa a conexão das funções da camada model com o DB', async () => {
+// eslint-disable-next-line max-len
+describe('01 - Testa a conexão das funções da camada model com o DB', async () => {
   before(() => {
     const execute = [true];
 

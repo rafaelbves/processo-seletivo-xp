@@ -44,7 +44,8 @@ const mockClientsAssets = [
   },
 ];
 
-describe('faz a validação do pedido', async () => {
+// eslint-disable-next-line max-len
+describe('02 - faz a validação do pedido /investimentos/comprar||vender', async () => {
   it('cliente não informado', async () => {
     const wrongBody = {
       codAtivo: 2,
@@ -143,7 +144,7 @@ describe('faz a validação do pedido', async () => {
   });
 });
 
-describe('compra uma ação', async () => {
+describe('03 - compra uma ativo /investimentos/comprar', async () => {
   before(() => {
     sinon.stub(model, 'getClientsBalance').resolves(mockClientsBalance);
     sinon.stub(model, 'getAssetsAvailable').resolves(mockGetAssetsAvailable);
@@ -291,7 +292,7 @@ describe('compra uma ação', async () => {
 });
 
 
-describe('vender uma ação', async () => {
+describe('04 - vender uma ativo /investimentos/vender', async () => {
   before(() => {
     sinon.stub(model, 'getClientsBalance').resolves(mockClientsBalance);
     sinon.stub(model, 'getClientsAssets').resolves(mockClientsAssets);
@@ -398,7 +399,7 @@ describe('vender uma ação', async () => {
     };
   });
 
-  it('venda ralisada com sucesso', async () => {
+  it('venda realisada com sucesso', async () => {
     const sellRequest = {
       codCliente: 1,
       codAtivo: 2,

@@ -42,7 +42,7 @@ const mockGetAssetsAvailable = [
   },
 ];
 
-describe('Retorna a lista de ativos que o cliente possui', async () => {
+describe('05 - Retorna a lista de ativos que o cliente possui', async () => {
   before(() => {
     sinon.stub(model, 'getClientsAssets').resolves(mockClientsAssets);
     sinon.stub(model, 'getClientsBalance').resolves(mockClientsBalance);
@@ -85,7 +85,7 @@ describe('Retorna a lista de ativos que o cliente possui', async () => {
   });
 });
 
-describe('localiza o ativo pelo id', async () => {
+describe('06 - localiza o ativo pelo id /ativos', async () => {
   before(() => {
     sinon.stub(model, 'getAssetsAvailable').resolves(mockGetAssetsAvailable);
   });
