@@ -12,7 +12,7 @@ O desafio consistiu em desenvolver uma API que fosse semelhante ao dia a dia da 
 Para o desenvolvimento da aplicação foi utilizado:
 * NodeJS e ExpressJS, para o desenvolvimento da plicação;
 * Docker, par roda o projeto em containers;
-* MYSQL, para o banco de dados
+* MYSQL, para o banco de dados;
 * Mocha, Chai e Sinon, para os testes.
 
 ## Instalando dependências
