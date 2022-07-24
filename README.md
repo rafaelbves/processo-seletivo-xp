@@ -11,8 +11,8 @@ O desafio consistiu em desenvolver uma API que fosse semelhante ao dia a dia da 
 
 Para o desenvolvimento da aplicação foi utilizado:
 * NodeJS e ExpressJS, para o desenvolvimento da plicação;
-* Docker, par roda o projeto em containers;
-* MYSQL, para o banco de dados;
+* Docker, para rodar o projeto em containers;
+* MYSQL, para o banco de dados
 * Mocha, Chai e Sinon, para os testes.
 
 ## Instalando dependências
@@ -31,6 +31,11 @@ npm start
 
 ###### Observações:
 Ao executar o comando `npm start` dados fictícios são inseridos ao banco de dados, sempre que a aplicação é iniciada/reiniciada ela restaura as informações originais do banco de dados. Para alterar as informações iniciais altere o arquivo  `/database/install_db.sql.`
+
+## Rodar os testes
+~~~
+npm run test
+~~~
 
 ## Endpoints
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/20323323-556e65cc-c330-43d0-b919-5c7601e31c6a?action=collection%2Ffork&collection-url=entityId%3D20323323-556e65cc-c330-43d0-b919-5c7601e31c6a%26entityType%3Dcollection%26workspaceId%3Dd1baa3d9-9f25-41b4-8510-642d214f4015)
